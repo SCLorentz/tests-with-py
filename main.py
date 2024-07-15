@@ -1,5 +1,3 @@
-import string
-
 print("hello world!")
 
 while True:
