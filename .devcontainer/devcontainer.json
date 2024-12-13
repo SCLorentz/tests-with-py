@@ -11,8 +11,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"eamodio.gitlens",
-				"seepine.md-editor"
+				"ms-python.python"
 			]
 		}
 	}

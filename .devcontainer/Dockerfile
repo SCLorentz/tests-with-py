@@ -2,10 +2,9 @@ FROM debian:bookworm-slim
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y python3-pip python3 python3-venv git pipx pypy3 -y && \
+RUN apt-get update && apt-get install -y git pipx pypy3 --no-install-recommends -y && \
     pipx install bython && \
-    pipx ensurepath && \
-    chmod +x /workspaces/tests-with-py/run.sh
+    pipx ensurepath
 
 ENV FLASK_APP=tests-with-py
 
