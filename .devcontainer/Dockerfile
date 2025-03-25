@@ -2,7 +2,7 @@ FROM debian:bookworm-slim
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y git pipx pypy3 --no-install-recommends -y && \
+RUN apt-get update && apt-get install -y git pipx pypy3 gcc python3-dev --no-install-recommends -y && \
     pipx install bython && \
     pipx ensurepath
 
