@@ -43,14 +43,22 @@ PyMODINIT_FUNC PyInit_my_asm(void)
     PyObject *m = PyModule_Create(&my_asm);
 
     PyObject *builtins = PyImport_ImportModule("builtins");
-    if (!builtins) { return PyModule_Create(&my_asm); }
+    if (!builtins) { Py_DECREF(m); return NULL; }
 
-    PyObject *print_func = PyObject_GetAttrString(m, "write_msg");
-    if (print_func)
+    PyObject* print_func = PyObject_GetAttrString(builtins, "print");
+    if (!print_func) { Py_DECREF(m); Py_DECREF(builtins); return NULL; }
+    
+    PyObject* custom_print_func = PyObject_GetAttrString(m, "write_msg");
+    if (custom_print_func == NULL)
     {
-        PyObject_SetAttrString(builtins, "print", print_func);
+        Py_DECREF(m);
+        Py_DECREF(builtins);
         Py_DECREF(print_func);
+        return NULL;
     }
+
+    PyObject_SetAttrString(builtins, "print", custom_print_func);
+    Py_DECREF(print_func);
     Py_DECREF(builtins);
 
     return PyModule_Create(&my_asm);
