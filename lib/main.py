@@ -1,4 +1,5 @@
 from my_asm import println
 
 println("Hello World from assembly!");
-print("hello 2");
+print("message");
+println(" other message");
