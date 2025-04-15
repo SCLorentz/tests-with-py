@@ -1,0 +1,5 @@
+Metadata-Version: 2.1
+Name: my-asm
+Version: 0.1
+Summary: Um modulo que reviza as funções de python para assembly
+Author: SCLorentz

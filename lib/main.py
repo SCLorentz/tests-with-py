@@ -1,2 +1,3 @@
-import my_asm # type: ignore
-my_asm.write_msg("Hello World from assembly!\n")
+from my_asm import println #type: ignore[import]
+
+println("Hello World from assembly!")

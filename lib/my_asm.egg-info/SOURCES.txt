@@ -1,0 +1,6 @@
+python.c
+setup.py
+my_asm.egg-info/PKG-INFO
+my_asm.egg-info/SOURCES.txt
+my_asm.egg-info/dependency_links.txt
+my_asm.egg-info/top_level.txt

@@ -5,12 +5,19 @@ extern void write_asm(int fd, const void *buf, size_t count);
 static PyObject* write_msg(PyObject* self, PyObject* args)
 {
     const char *string;
-    if (!PyArg_ParseTuple(args, "s", &string))
-    {
-        return NULL;
-    }
+    if (!PyArg_ParseTuple(args, "s", &string)) { return NULL; }
 
     write_asm(1, string, strlen(string));
+
+    Py_RETURN_NONE;
+}
+
+static PyObject* write_msg_ln(PyObject* self, PyObject* args)
+{
+    char *string;
+    if (!PyArg_ParseTuple(args, "s", &string)) { return NULL; }
+
+    write_asm(1, strcat(string, "\n"), strlen(string) + 1);
 
     Py_RETURN_NONE;
 }
@@ -18,6 +25,7 @@ static PyObject* write_msg(PyObject* self, PyObject* args)
 static PyMethodDef MyModulesMethods[] =
 {
     {"write_msg", write_msg, METH_VARARGS, "printa uma mensagem"},
+    {"println", write_msg_ln, METH_VARARGS, "printa uma mensagem com nova linha"},
     {NULL, NULL, 0, NULL}
 };
 
@@ -32,5 +40,18 @@ static struct PyModuleDef my_asm =
 
 PyMODINIT_FUNC PyInit_my_asm(void)
 {
+    PyObject *m = PyModule_Create(&my_asm);
+
+    PyObject *builtins = PyImport_ImportModule("builtins");
+    if (!builtins) { return PyModule_Create(&my_asm); }
+
+    PyObject *print_func = PyObject_GetAttrString(m, "write_msg");
+    if (print_func)
+    {
+        PyObject_SetAttrString(builtins, "print", print_func);
+        Py_DECREF(print_func);
+    }
+    Py_DECREF(builtins);
+
     return PyModule_Create(&my_asm);
 }
